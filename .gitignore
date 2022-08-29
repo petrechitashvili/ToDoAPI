@@ -3,3 +3,7 @@
 *.vsidx
 *.v2
 *.v2
+*.dll
+.vs/ToDoAPI/v17/.suo
+*.dll
+*.sentinel

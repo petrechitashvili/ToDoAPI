@@ -18,36 +18,28 @@ namespace ToDoAPI.Controllers
 
         public TodoItemsController(TodoContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException();
         }
 
         // GET: api/TodoItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+        public IEnumerable<TodoItem> GetTodoItems()
         {
-          if (_context.TodoItems == null)
-          {
-              return NotFound();
-          }
-            return await _context.TodoItems.ToListAsync();
+            return _context.TodoItems.ToList();
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
+        public ActionResult<TodoItem> GetTodoItem(long id)
         {
-          if (_context.TodoItems == null)
-          {
-              return NotFound();
-          }
-            var todoItem = await _context.TodoItems.FindAsync(id);
-
-            if (todoItem == null)
+            if (id == 0)
             {
-                return NotFound();
+                return BadRequest();
             }
-
-            return todoItem;
+            else
+            {
+                return _context.TodoItems.FirstOrDefault(x => x.Id == id);
+            }
         }
 
         // PUT: api/TodoItems/5
@@ -84,36 +76,24 @@ namespace ToDoAPI.Controllers
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        public ActionResult<TodoItem> PostTodoItem(TodoItem todoItem)
         {
-          if (_context.TodoItems == null)
-          {
-              return Problem("Entity set 'TodoContext.TodoItems'  is null.");
-          }
-            _context.TodoItems.Add(todoItem);
-            await _context.SaveChangesAsync();
+            _context.Add(todoItem);
 
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(long id)
+        public void DeleteTodoItem(long id)
         {
-            if (_context.TodoItems == null)
-            {
-                return NotFound();
-            }
-            var todoItem = await _context.TodoItems.FindAsync(id);
-            if (todoItem == null)
-            {
-                return NotFound();
-            }
+            TodoItem todoItem = _context.TodoItems.FirstOrDefault(x => x.Id == id);
 
-            _context.TodoItems.Remove(todoItem);
-            await _context.SaveChangesAsync();
+            _context.Remove(todoItem);
 
-            return NoContent();
+            _context.SaveChanges();
         }
 
         private bool TodoItemExists(long id)
