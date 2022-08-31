@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Models;
 using TodoApi.Models;
+using ToDoAPI.Service;
 
 namespace ToDoAPI.Controllers
 {
@@ -14,71 +15,78 @@ namespace ToDoAPI.Controllers
     [ApiController]
     public class TodoItemsController : ControllerBase
     {
-        private readonly TodoContext _context;
+        private readonly ITodoService _todoService;
 
-        public TodoItemsController(TodoContext context)
+        public TodoItemsController(ITodoService service)
         {
-            _context = context ?? throw new ArgumentNullException();
+            _todoService = service;
         }
 
         // GET: api/TodoItems
         [HttpGet]
         public IEnumerable<TodoItem> GetTodoItems()
         {
-            return _context.TodoItems.ToList();
+            return _todoService.GetTodoItems();
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public ActionResult<TodoItem> GetTodoItem(long id)
         {
-            if (id == 0)
+            try
             {
-                return BadRequest();
+                return _todoService.GetTodoItem(id);
             }
-            else
+            catch(Exception ex)
             {
-                return _context.TodoItems.FirstOrDefault(x => x.Id == id);
+                return NotFound(ex.Message);
             }
         }
 
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult PutTodoItem(long id, TodoItem todoItem)
+        public ActionResult<TodoItem> EditTodoItem(long id, TodoItem todoItem)
         {
-            var todoObject = _context.TodoItems.Where(x => x.Id == id).FirstOrDefault();
-
-            todoObject.Name = todoItem.Name;
-            todoObject.Description = todoItem.Description;
-            todoObject.ActivityType = todoItem.ActivityType;
-            todoObject.IsComplete = todoItem.IsComplete;
-            _context.SaveChanges();
-            return Ok(todoObject);
+            try
+            {
+                return _todoService.EditTodoItem(id, todoItem);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
         }
 
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public ActionResult<TodoItem> PostTodoItem(TodoItem todoItem)
+        public ActionResult<TodoItem> CreateTodoItem(TodoItem todoItem)
         {
-            _context.Add(todoItem);
-
-            _context.SaveChanges();
-
-            return Ok();
+            try
+            {
+                return _todoService.CreateTodoItem(todoItem);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public void DeleteTodoItem(long id)
+        public ActionResult DeleteTodoItem(long id)
         {
-            TodoItem todoItem = _context.TodoItems.FirstOrDefault(x => x.Id == id);
-
-            _context.Remove(todoItem);
-
-            _context.SaveChanges();
+            try
+            {
+                _todoService.DeleteTodoItem(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
