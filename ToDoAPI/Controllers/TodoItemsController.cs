@@ -80,10 +80,5 @@ namespace ToDoAPI.Controllers
 
             _context.SaveChanges();
         }
-
-        private bool TodoItemExists(long id)
-        {
-            return (_context.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
     }
 }

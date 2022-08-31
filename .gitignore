@@ -8,3 +8,7 @@
 *.dll
 *.sentinel
 .vs/ToDoAPI/v17/.suo
+*.vsidx
+*.vsidx
+*.vsidx
+*.dll
