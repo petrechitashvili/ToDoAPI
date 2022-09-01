@@ -13,7 +13,7 @@ namespace ToDoAPI.Service
 
         public IEnumerable<TodoItem> GetTodoItems()
         {
-            return _context.TodoItems.ToList();
+            return _context.TodoItems.ToList().Where(x => x.DeleteDate is null);
         }
 
         public TodoItem GetTodoItem(long id)
@@ -59,6 +59,7 @@ namespace ToDoAPI.Service
                 todoObject.Description = todoItem.Description;
                 todoObject.ActivityType = todoItem.ActivityType;
                 todoObject.IsComplete = todoItem.IsComplete;
+                todoObject.LastModifiedDate = DateTime.Now;
                 _context.SaveChanges();
             }
 
@@ -80,6 +81,8 @@ namespace ToDoAPI.Service
                 throw new Exception("IsComplete can't be empty");
             }
 
+            todoItem.CreateDate = DateTime.Now;
+
             _context.Add(todoItem);
 
             _context.SaveChanges();
@@ -97,7 +100,7 @@ namespace ToDoAPI.Service
             }
             else
             {
-                _context.Remove(todoItem);
+                todoItem.DeleteDate = DateTime.Now;
 
                 _context.SaveChanges();
             }
