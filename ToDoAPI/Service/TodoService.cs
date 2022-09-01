@@ -22,10 +22,15 @@ namespace ToDoAPI.Service
             {
                 throw new Exception("id can't be zero");
             }
-            else
+
+            var todoItem = _context.TodoItems.FirstOrDefault(x => x.Id == id);
+
+            if (todoItem == null)
             {
-                return _context.TodoItems.FirstOrDefault(x => x.Id == id);
+                throw new Exception("Record not found!");
             }
+
+            return todoItem;
         }
 
         public TodoItem EditTodoItem(long id, TodoItem todoItem)
