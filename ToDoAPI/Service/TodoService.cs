@@ -5,8 +5,8 @@ namespace ToDoAPI.Service
 {
     public class TodoService : ITodoService
     {
-        private readonly TodoContext _context;
-        public TodoService(TodoContext context)
+        private readonly ITodoContext _context;
+        public TodoService(ITodoContext context)
         {
             _context = context ?? throw new ArgumentNullException();
         }
@@ -55,12 +55,7 @@ namespace ToDoAPI.Service
             }
             else
             {
-                todoObject.Name = todoItem.Name;
-                todoObject.Description = todoItem.Description;
-                todoObject.ActivityType = todoItem.ActivityType;
-                todoObject.IsComplete = todoItem.IsComplete;
-                todoObject.LastModifiedDate = DateTime.Now;
-                _context.SaveChanges();
+                _context.Update(id, todoItem);
             }
 
             return todoObject;
@@ -83,9 +78,7 @@ namespace ToDoAPI.Service
 
             todoItem.CreateDate = DateTime.Now;
 
-            _context.Add(todoItem);
-
-            _context.SaveChanges();
+            _context.Create(todoItem);
 
             return todoItem;
         }
@@ -100,9 +93,7 @@ namespace ToDoAPI.Service
             }
             else
             {
-                todoItem.DeleteDate = DateTime.Now;
-
-                _context.SaveChanges();
+                _context.Delete(id);
             }
         }
     }

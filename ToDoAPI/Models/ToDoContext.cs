@@ -4,7 +4,7 @@ using ToDoAPI.Models;
 
 namespace TodoApi.Models
 {
-    public class TodoContext : DbContext
+    public class TodoContext :  DbContext, ITodoContext
     {
         public TodoContext(DbContextOptions<TodoContext> options)
             : base(options)
@@ -29,5 +29,38 @@ namespace TodoApi.Models
         //{
         //    return TodoItems.Local.ToList();
         //}
+
+        public void Update(long id, TodoItem todoItem)
+        {
+            var todoObject = TodoItems.Where(x => x.Id == id).FirstOrDefault();
+
+            if (todoObject is null)
+            {
+                throw new Exception("item not found!");
+            }
+
+            if (todoObject != null)
+            {
+                todoObject.Name = todoItem.Name;
+                todoObject.Description = todoItem.Description;
+                todoObject.ActivityType = todoItem.ActivityType;
+                todoObject.IsComplete = todoItem.IsComplete;
+                todoObject.LastModifiedDate = DateTime.Now;
+                base.SaveChanges();
+            }
+        }
+
+        public void Create(TodoItem todoItem)
+        {
+            TodoItems.Add(todoItem);
+            base.SaveChanges();
+        }
+
+        public void Delete(long id)
+        {
+            var todoItem = TodoItems.Where(x => x.Id == id).FirstOrDefault();
+            todoItem.DeleteDate = DateTime.Now;
+            base.SaveChanges();
+        }
     }
 }
