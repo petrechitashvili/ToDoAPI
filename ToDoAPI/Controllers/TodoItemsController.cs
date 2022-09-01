@@ -61,7 +61,7 @@ namespace ToDoAPI.Controllers
 
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("create")]
         public ActionResult<TodoItem> CreateTodoItem(TodoItem todoItem)
         {
             try
