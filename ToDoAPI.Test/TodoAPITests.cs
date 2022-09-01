@@ -7,29 +7,56 @@ namespace ToDoAPI.Test
 {
     public class TodoAPITests
     {
-        private readonly Mock<TodoContext> _todoContextMock;
+        private readonly Mock<ITodoContext> _todoContextMock;
         private readonly TodoService _todoService;
         public TodoAPITests()
         {
-            _todoContextMock = new Mock<TodoContext>(null);
+            _todoContextMock = new Mock<ITodoContext>();
             _todoService = new TodoService(_todoContextMock.Object);
         }
         [Fact]
-        public void CreateTodoItemEmptyNameTest()
+        public void CreateTodoItem_Empty_Name_Test()
         {
             var todoItem = new TodoItem() {Name = null, Description = "test", ActivityType = ActivityTypeEnum.Productive, IsComplete = true };
 
             try
             {
-                //_todoService.Setup(x => x.CreateTodoItem(todoItem));
-                //_todoService.Object.CreateTodoItem(todoItem);
                 _todoService.CreateTodoItem(todoItem);
             }
             catch(Exception ex)
             {
-                Assert.Equal("Name can't be empty! yeaa", ex.Message);
+                Assert.Equal("Name can't be empty!", ex.Message);
             }
+        }
 
+        [Fact]
+        public void CreateTodoItem_Empty_ActivityType_Test()
+        {
+            var todoItem = new TodoItem() { Name = "test", Description = "test", ActivityType = null, IsComplete = true };
+
+            try
+            {
+                _todoService.CreateTodoItem(todoItem);
+            }
+            catch (Exception ex)
+            {
+                Assert.Equal("ActivityType can't be empty!", ex.Message);
+            }
+        }
+
+        [Fact]
+        public void CreateTodoItem_Empty_IsComplete_Test()
+        {
+            var todoItem = new TodoItem() { Name = "test", Description = "test", ActivityType = ActivityTypeEnum.Productive, IsComplete = null };
+
+            try
+            {
+                _todoService.CreateTodoItem(todoItem);
+            }
+            catch (Exception ex)
+            {
+                Assert.Equal("IsComplete can't be empty!", ex.Message);
+            }
         }
     }
 }

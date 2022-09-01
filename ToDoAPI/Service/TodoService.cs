@@ -73,7 +73,7 @@ namespace ToDoAPI.Service
             }
             if (todoItem.IsComplete is null)
             {
-                throw new Exception("IsComplete can't be empty");
+                throw new Exception("IsComplete can't be empty!");
             }
 
             todoItem.CreateDate = DateTime.Now;
