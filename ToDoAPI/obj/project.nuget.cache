@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TA4m49alIIbdcmdiI3QR39pGXotqOOS6wY4KADp/j3464AoAPr08Uq/x1DvudkNQagtu7NTTvbOgT4pvNlmhRg==",
+  "dgSpecHash": "GFWnRxc5EDQD3gTQgL+IOtfKbhS6QsiUfRHG3Q/EFwoWOheI2KwctlzfBW+UX1k3FPtSIx4suzGLGd3hyS3wCQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+  "projectFilePath": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\ToDoAPI\\ToDoAPI.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\surma\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\surma\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

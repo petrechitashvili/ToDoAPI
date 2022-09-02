@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ToDoAPI.Models;
+using TodoAPI.Domain.Domain;
 using ToDoAPI.Service;
 
 namespace ToDoAPI.Controllers

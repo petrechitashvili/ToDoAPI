@@ -1,4 +1,4 @@
-﻿namespace ToDoAPI.Models
+﻿namespace TodoAPI.Domain.Domain
 {
     public class TodoItem : BaseEntity
     {

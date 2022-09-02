@@ -3147,6 +3147,32 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "TodoAPI.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.InMemory": "6.0.8"
+        },
+        "compile": {
+          "bin/placeholder/TodoAPI.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TodoAPI.Domain.dll": {}
+        }
+      },
+      "TodoAPI.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "TodoAPI.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TodoAPI.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TodoAPI.Service.dll": {}
+        }
       }
     }
   },
@@ -9881,6 +9907,16 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "TodoAPI.Domain/1.0.0": {
+      "type": "project",
+      "path": "../TodoAPI.Domain/TodoAPI.Domain.csproj",
+      "msbuildProject": "../TodoAPI.Domain/TodoAPI.Domain.csproj"
+    },
+    "TodoAPI.Service/1.0.0": {
+      "type": "project",
+      "path": "../TodoAPI.Service/TodoAPI.Service.csproj",
+      "msbuildProject": "../TodoAPI.Service/TodoAPI.Service.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -9889,7 +9925,8 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.8",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.8",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.8",
-      "Swashbuckle.AspNetCore >= 6.4.0"
+      "Swashbuckle.AspNetCore >= 6.4.0",
+      "TodoAPI.Service >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -9898,9 +9935,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
-      "projectName": "ToDoAPI",
-      "projectPath": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+      "projectUniqueName": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\ToDoAPI\\ToDoAPI.API.csproj",
+      "projectName": "ToDoAPI.API",
+      "projectPath": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\ToDoAPI\\ToDoAPI.API.csproj",
       "packagesPath": "C:\\Users\\surma\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\ToDoAPI\\obj\\",
       "projectStyle": "PackageReference",
@@ -9918,7 +9955,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\surma\\source\\repos\\ToDoAPI\\TodoAPI.Service\\TodoAPI.Service.csproj": {
+              "projectPath": "C:\\Users\\surma\\source\\repos\\ToDoAPI\\TodoAPI.Service\\TodoAPI.Service.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

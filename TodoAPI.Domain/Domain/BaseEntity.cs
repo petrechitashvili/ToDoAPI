@@ -1,6 +1,6 @@
-﻿namespace ToDoAPI.Models
+﻿namespace TodoAPI.Domain.Domain
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         public long Id { get; set; }
 

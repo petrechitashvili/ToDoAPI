@@ -1,4 +1,4 @@
-﻿using ToDoAPI.Models;
+﻿using TodoAPI.Domain.Domain;
 
 namespace ToDoAPI.Service
 {

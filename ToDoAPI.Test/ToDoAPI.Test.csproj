@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ToDoAPI\ToDoAPI.csproj" />
+    <ProjectReference Include="..\ToDoAPI\ToDoAPI.API.csproj" />
   </ItemGroup>
 
 </Project>

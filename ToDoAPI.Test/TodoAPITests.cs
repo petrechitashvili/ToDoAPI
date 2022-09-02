@@ -1,17 +1,17 @@
 using Moq;
-using TodoApi.Models;
-using ToDoAPI.Models;
+using TodoAPI.Domain.Domain;
+using TodoAPI.Domain.Repository;
 using ToDoAPI.Service;
 
 namespace ToDoAPI.Test
 {
     public class TodoAPITests
     {
-        private readonly Mock<ITodoContext> _todoContextMock;
+        private readonly Mock<ITodoRepository> _todoContextMock;
         private readonly TodoService _todoService;
         public TodoAPITests()
         {
-            _todoContextMock = new Mock<ITodoContext>();
+            _todoContextMock = new Mock<ITodoRepository>();
             _todoService = new TodoService(_todoContextMock.Object);
         }
         [Fact]

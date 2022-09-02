@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TodoAPI.Domain.Domain;
 
-namespace ToDoAPI.Models
+namespace TodoAPI.Domain.Repository
 {
-    public interface ITodoContext
+    public interface ITodoRepository
     {
-        public DbSet<TodoItem> TodoItems { get; set; }
-
         public IEnumerable<TodoItem> GetList();
 
         public TodoItem? GetById(long id);

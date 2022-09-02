@@ -1,19 +1,19 @@
-﻿using TodoApi.Models;
-using ToDoAPI.Models;
+﻿using TodoAPI.Domain.Domain;
+using TodoAPI.Domain.Repository;
 
 namespace ToDoAPI.Service
 {
     public class TodoService : ITodoService
     {
-        private readonly ITodoContext _context;
-        public TodoService(ITodoContext context)
+        private readonly ITodoRepository _repository;
+        public TodoService(ITodoRepository repository)
         {
-            _context = context ?? throw new ArgumentNullException();
+            _repository = repository ?? throw new ArgumentNullException();
         }
 
         public IEnumerable<TodoItem> GetTodoItems()
         {
-            return _context.GetList();
+            return _repository.GetList();
         }
 
         public TodoItem GetTodoItem(long id)
@@ -23,7 +23,7 @@ namespace ToDoAPI.Service
                 throw new Exception("id can't be zero");
             }
 
-            var todoItem = _context.GetById(id);
+            var todoItem = _repository.GetById(id);
 
             if (todoItem == null)
             {
@@ -48,7 +48,7 @@ namespace ToDoAPI.Service
                 throw new Exception("IsComplete can't be empty!");
             }
 
-            var todoObject = _context.Update(id, todoItem);
+            var todoObject = _repository.Update(id, todoItem);
 
             if(todoObject is null)
             {
@@ -73,14 +73,14 @@ namespace ToDoAPI.Service
                 throw new Exception("IsComplete can't be empty!");
             }
 
-            _context.Create(todoItem);
+            _repository.Create(todoItem);
 
             return todoItem;
         }
 
         public void DeleteTodoItem(long id)
         {
-            var todoItem = _context.Delete(id);
+            var todoItem = _repository.Delete(id);
 
             if (todoItem is null)
             {
