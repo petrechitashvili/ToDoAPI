@@ -30,16 +30,25 @@ namespace TodoApi.Models
         //    return TodoItems.Local.ToList();
         //}
 
-        public void Update(long id, TodoItem todoItem)
+        public IEnumerable<TodoItem> GetList()
+        {
+            return TodoItems.ToList().Where(x => x.DeleteDate is null);
+        }
+
+        public TodoItem? GetById(long id)
+        {
+            return TodoItems.FirstOrDefault(x => x.Id == id);
+        }
+
+        public TodoItem? Update(long id, TodoItem todoItem)
         {
             var todoObject = TodoItems.Where(x => x.Id == id).FirstOrDefault();
 
             if (todoObject is null)
             {
-                throw new Exception("item not found!");
+                return null;
             }
-
-            if (todoObject != null)
+            else
             {
                 todoObject.Name = todoItem.Name;
                 todoObject.Description = todoItem.Description;
@@ -47,20 +56,27 @@ namespace TodoApi.Models
                 todoObject.IsComplete = todoItem.IsComplete;
                 todoObject.LastModifiedDate = DateTime.Now;
                 base.SaveChanges();
+                return todoObject;
             }
         }
 
         public void Create(TodoItem todoItem)
         {
+            todoItem.CreateDate = DateTime.Now;
             TodoItems.Add(todoItem);
             base.SaveChanges();
         }
 
-        public void Delete(long id)
+        public TodoItem? Delete(long id)
         {
-            var todoItem = TodoItems.Where(x => x.Id == id).FirstOrDefault();
+            var todoItem = TodoItems.FirstOrDefault(x => x.Id == id);
+            if (todoItem is null)
+            {
+                return null;
+            }
             todoItem.DeleteDate = DateTime.Now;
             base.SaveChanges();
+            return todoItem;
         }
     }
 }

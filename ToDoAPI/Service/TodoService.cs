@@ -13,7 +13,7 @@ namespace ToDoAPI.Service
 
         public IEnumerable<TodoItem> GetTodoItems()
         {
-            return _context.TodoItems.ToList().Where(x => x.DeleteDate is null);
+            return _context.GetList();
         }
 
         public TodoItem GetTodoItem(long id)
@@ -23,7 +23,7 @@ namespace ToDoAPI.Service
                 throw new Exception("id can't be zero");
             }
 
-            var todoItem = _context.TodoItems.FirstOrDefault(x => x.Id == id);
+            var todoItem = _context.GetById(id);
 
             if (todoItem == null)
             {
@@ -35,12 +35,6 @@ namespace ToDoAPI.Service
 
         public TodoItem EditTodoItem(long id, TodoItem todoItem)
         {
-            var todoObject = _context.TodoItems.Where(x => x.Id == id).FirstOrDefault();
-
-            if (todoObject is null) 
-            { 
-                throw new Exception("item not found!"); 
-            }
             if (string.IsNullOrEmpty(todoItem.Name))
             {
                 throw new Exception("Name can't be empty!");
@@ -51,11 +45,14 @@ namespace ToDoAPI.Service
             }
             if(todoItem.IsComplete is null)
             {
-                throw new Exception("IsComplete can't be empty");
+                throw new Exception("IsComplete can't be empty!");
             }
-            else
+
+            var todoObject = _context.Update(id, todoItem);
+
+            if(todoObject is null)
             {
-                _context.Update(id, todoItem);
+                throw new Exception("Record not found!");
             }
 
             return todoObject;
@@ -76,8 +73,6 @@ namespace ToDoAPI.Service
                 throw new Exception("IsComplete can't be empty!");
             }
 
-            todoItem.CreateDate = DateTime.Now;
-
             _context.Create(todoItem);
 
             return todoItem;
@@ -85,15 +80,11 @@ namespace ToDoAPI.Service
 
         public void DeleteTodoItem(long id)
         {
-            var todoItem = _context.TodoItems.FirstOrDefault(x => x.Id == id);
+            var todoItem = _context.Delete(id);
 
             if (todoItem is null)
             {
                 throw new Exception("Record not found!");
-            }
-            else
-            {
-                _context.Delete(id);
             }
         }
     }

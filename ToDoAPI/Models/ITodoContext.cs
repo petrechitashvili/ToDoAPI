@@ -6,8 +6,12 @@ namespace ToDoAPI.Models
     {
         public DbSet<TodoItem> TodoItems { get; set; }
 
-        public void Update(long id, TodoItem todoItem);
+        public IEnumerable<TodoItem> GetList();
+
+        public TodoItem? GetById(long id);
+
+        public TodoItem? Update(long id, TodoItem todoItem);
         public void Create(TodoItem todoItem);
-        public void Delete(long id);
+        public TodoItem? Delete(long id);
     }
 }
